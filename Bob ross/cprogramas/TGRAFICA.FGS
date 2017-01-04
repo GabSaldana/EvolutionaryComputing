@@ -1,0 +1,110 @@
+/*rutinas para manejo de tarjetas graficas*/
+/*Fernando Galindo Soria*/
+#include <dos.h>
+void modogra(int modo)//inicia el modo de video para tarjetas hasta vga
+{
+ union REGS reg;
+ reg.h.ah=0;
+ reg.h.al=modo;
+ int86(0x10,&reg,&reg);
+}
+
+void modo_svga(unsigned int modo)
+{//inicia el modo de video para tarjetas incluyendo svga
+ union REGS reg;
+ reg.h.ah=0x4F;
+ reg.h.al=0x02;
+ reg.x.bx=modo;
+ int86(0x10,&reg,&reg);
+}
+
+
+/*maneja la paleta de color llamando directamente a los puertos
+  del convertidor analogico digital  de la tarjeta de video 31/iii/96*/
+
+void leecolordac(char *r,char *g,char *b,char color)//lee los valores rgb de color
+{ outportb(0x3C7,color);/*inicializa el color  - (apunta automaticamente al
+			  siguiente color cuando termina de leer los rgb)*/
+  *r=inportb(0x3C9);
+  *g=inportb(0x3C9);
+  *b=inportb(0x3C9);
+}
+
+void escrcolordac(char color,char r,char g,char b)//cambia los valores rgb de color
+{ outportb(0x3C8,color);/*inicializa el color  - (apunta automaticamente al
+			  siguiente color cuando termina de cargar los rgb)*/
+  outportb(0x3C9,r);
+  outportb(0x3C9,g);
+  outportb(0x3C9,b);
+}
+
+void copiacolordac(char colorsal,char colorent)
+  //copia los valores rgb de colorent a colorsal
+{char r,g,b;
+ outportb(0x3C7,colorent);/*inicializa el color  - (apunta automaticamente al
+			  siguiente color cuando termina de leer los rgb)*/
+  r=inportb(0x3C9);
+  g=inportb(0x3C9);
+  b=inportb(0x3C9);
+
+ outportb(0x3C8,colorsal);/*inicializa el color  - (apunta automaticamente al
+			  siguiente color cuando termina de cargar los rgb)*/
+  outportb(0x3C9,r);
+  outportb(0x3C9,g);
+  outportb(0x3C9,b);
+}
+
+/*maneja la paleta de color llamando directamente a los puertos
+  del convertidor analogico digital  de la tarjeta de video 31/iii/96
+
+  utiliza initgraph y maneja paleta rgb de 16 colores b(lue) g(reen) r(ed)
+    14/iv/96 */
+void leecolordac16(char color,char *r,char *g,char *b)//lee los valores rgb de color
+{
+  char indcol[]={0,1,2,3,4,5,20,7,56,57,58,59,60,61,62,63};
+  outportb(0x3C7,indcol[color]);/*inicializa el color  - (apunta automaticamente al
+			  siguiente color cuando termina de leer los rgb)*/
+  *r=inportb(0x3C9);
+  *g=inportb(0x3C9);
+  *b=inportb(0x3C9);
+}
+
+/*cambia de color paleta llamando directamente a los puertos
+  del convertidor analogico digital  de la tarjeta de video 31/iii/96
+
+  utiliza initgraph y maneja paleta rgb de 16 colores b(lue) g(reen) r(ed)
+    14/iv/96 */
+void escrcolordac16(char color,char r,char g,char b)
+{
+ char indcol[]={0,1,2,3,4,5,20,7,56,57,58,59,60,61,62,63};
+  outportb(0x3C8,indcol[color]);/*inicializa el color*/
+  outportb(0x3C9,r);
+  outportb(0x3C9,g);
+  outportb(0x3C9,b);
+}
+
+
+/*//maneja la paleta de color llamando a interrupciones (lenta) 9/iii/96
+void escribecolor(int color,int r, int g,int b)
+{
+ union REGS reg;
+ reg.h.ah=0x10;
+ reg.h.al=0x10;
+ reg.x.bx=color;
+ reg.h.dh=r;
+ reg.h.ch=g;
+ reg.h.cl=b;
+ int86(0x10,&reg,&reg);
+}
+
+void leecolor(char rojo,char verde,char azul,char color)
+{
+ union REGS reg;
+ reg.h.ah=0x10;
+ reg.h.al=0x15;
+ reg.x.bx=color;
+ int86(0x10,&reg,&reg);
+ rojo=reg.h.dh;
+ verde=reg.h.ch;
+ azul=reg.h.cl;
+}    */

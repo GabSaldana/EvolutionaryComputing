@@ -1,0 +1,34 @@
+
+
+What are the elements of Swarm Intelligence?
+R= 
+ *Two or more Individuals
+*Data 
+*Diversity of opinion
+*Independence of opinion
+*Imprecision
+
+
+What is Self Organization?
+R=  Individuals follow local behavioural rules, resulting in organised behaviour by the whole group without the need for global control.
+
+
+Provide an example where Swarm Intelligence can be useful.
+R= Crowd Simulation, Ant-based routing
+
+
+Provide an example where Swarm Intelligence cannot be useful.
+R= to ask the individuals  " find the roots of  
+f(x) = x2 + x - 12
+
+
+Why is learning important in Swarm Intelligence?
+R= Because they collect and processed information through social interaction and provides a solution to a problem cognitive that is not available for a single Individual.
+
+
+Why is signaling important in Swarm Intelligence?
+R=
+List the conditions required for Swarm Intelligence to perform well.
+R= We can conclude that SI performs well if there  is diversity of opinion, independence of opinion, an Initiative for truthful reporting, and if Individuals are only influenced by imprecision like the marble's problem and not by a systematic bias: such as the probability  problem.However despite the fact that there are some criteria for effective use of SI, there is lack of a baseline for this behavior.
+
+
